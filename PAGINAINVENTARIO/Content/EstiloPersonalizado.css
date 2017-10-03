@@ -1,0 +1,59 @@
+﻿body {
+}
+
+#cuerpo {
+    height: 400px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+
+
+#menu {
+    margin-left: 10px;
+    background-color:black;
+}
+
+#formulario {
+    text-align: center;
+    margin-top: 10%;
+}
+
+#cliente {
+    text-align: center;
+    margin-top: 10%;
+}
+
+
+#tabla {
+   
+   height:300px;
+}
+
+#listado {
+    text-align: center;
+    margin-top: -150px;
+    height:300px;
+    width:500px;
+    margin-left:810px;
+}
+
+#pie {
+    height: 30px;
+    margin-left: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    margin-top: 10px;
+    background-color:black;
+    margin-top:10px;
+}
+
+#formularioCliente{
+    margin-left: 500px;
+    margin-top: -150px;
+}
+
+#formularioFactura {
+    margin-left:550px;
+    margin-top:-150px;
+}

@@ -1,0 +1,38 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="PaginaMaestra.master.cs" Inherits="PAGINAINVENTARIO.FORMULARIO.PaginaMaestra" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>
+        <asp:ContentPlaceHolder ID="ContentTitle" runat="server"></asp:ContentPlaceHolder>
+    </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../Content/EstiloPersonalizado.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="contenedor">
+            <div id="slice" class="jumbotron"></div>
+            <div id="menu">
+                <ul class="nav nav-pills">
+                    <li><a href="#">FACTURAS</a></li>
+                    <li><a href="Clientes.aspx">CLIENTES</a></li>
+                    <li><a href="#">INVENTARIO</a></li>
+                    <li><a href="#">COTIZACIONES</a></li>
+                </ul>
+            </div>
+            <div id="cuerpo">
+                <asp:ContentPlaceHolder ID="ContentBody" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+            <div id="pie">
+                Ing. Raymeli Carela
+            </div>
+        </div>
+    </form>
+</body>
+</html>

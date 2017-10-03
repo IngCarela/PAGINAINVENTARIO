@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="INVENTARIODBModelo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ARTICULOS">
+          <Key>
+            <PropertyRef Name="id_articulo" />
+          </Key>
+          <Property Name="id_articulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Articulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cantidad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Precio" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLIENTES">
+          <Key>
+            <PropertyRef Name="Id_cliente" />
+          </Key>
+          <Property Name="Id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="COTIZACIONES">
+          <Key>
+            <PropertyRef Name="id_Cotizacion" />
+          </Key>
+          <Property Name="id_Cotizacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_articulos" Type="int" Nullable="false" />
+          <Property Name="Monto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Id_cliente" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DETALLEFACTURAS">
+          <Key>
+            <PropertyRef Name="id_detalle" />
+          </Key>
+          <Property Name="id_detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_articulos" Type="int" Nullable="false" />
+          <Property Name="Monto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Id_cliente" Type="int" Nullable="false" />
+          <Property Name="Descuento" Type="int" />
+        </EntityType>
+        <EntityType Name="ESTADOSFACTURAS">
+          <Key>
+            <PropertyRef Name="Id_estadoF" />
+          </Key>
+          <Property Name="Id_estadoF" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FACTURAS">
+          <Key>
+            <PropertyRef Name="Id_factura" />
+          </Key>
+          <Property Name="Id_factura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_detalle" Type="int" Nullable="false" />
+          <Property Name="Id_estado" Type="int" Nullable="false" />
+          <Property Name="Id_tipo" Type="int" Nullable="false" />
+          <Property Name="Id_usuario" Type="int" />
+        </EntityType>
+        <EntityType Name="TIPOSDEFACTURAS">
+          <Key>
+            <PropertyRef Name="Id_tipo" />
+          </Key>
+          <Property Name="Id_tipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPOSDEUSUARIOS">
+          <Key>
+            <PropertyRef Name="Id_tipoU" />
+          </Key>
+          <Property Name="Id_tipoU" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIOS">
+          <Key>
+            <PropertyRef Name="Id_usuario" />
+          </Key>
+          <Property Name="Id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contraseña" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_tipoU" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'INVENTARIODB.dbo.Factura_View' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Factura_View">
+          <Key>
+            <PropertyRef Name="Articulo" />
+            <PropertyRef Name="Nombre" />
+            <PropertyRef Name="Monto" />
+            <PropertyRef Name="Cantidad" />
+          </Key>
+          <Property Name="Articulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Monto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cotizaciones_ARTICULOS">
+          <End Role="ARTICULOS" Type="Self.ARTICULOS" Multiplicity="1" />
+          <End Role="COTIZACIONES" Type="Self.COTIZACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARTICULOS">
+              <PropertyRef Name="id_articulo" />
+            </Principal>
+            <Dependent Role="COTIZACIONES">
+              <PropertyRef Name="Id_articulos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cotizaciones_CLIENTES">
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="1" />
+          <End Role="COTIZACIONES" Type="Self.COTIZACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTES">
+              <PropertyRef Name="Id_cliente" />
+            </Principal>
+            <Dependent Role="COTIZACIONES">
+              <PropertyRef Name="Id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLEFACTURAS_ARTICULOS1">
+          <End Role="ARTICULOS" Type="Self.ARTICULOS" Multiplicity="1" />
+          <End Role="DETALLEFACTURAS" Type="Self.DETALLEFACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARTICULOS">
+              <PropertyRef Name="id_articulo" />
+            </Principal>
+            <Dependent Role="DETALLEFACTURAS">
+              <PropertyRef Name="Id_articulos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLEFACTURAS_CLIENTES1">
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="1" />
+          <End Role="DETALLEFACTURAS" Type="Self.DETALLEFACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTES">
+              <PropertyRef Name="Id_cliente" />
+            </Principal>
+            <Dependent Role="DETALLEFACTURAS">
+              <PropertyRef Name="Id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_DETALLEFACTURAS">
+          <End Role="DETALLEFACTURAS" Type="Self.DETALLEFACTURAS" Multiplicity="1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DETALLEFACTURAS">
+              <PropertyRef Name="id_detalle" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_ESTADOSFACTURAS">
+          <End Role="ESTADOSFACTURAS" Type="Self.ESTADOSFACTURAS" Multiplicity="1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADOSFACTURAS">
+              <PropertyRef Name="Id_estadoF" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_TIPOSDEFACTURAS1">
+          <End Role="TIPOSDEFACTURAS" Type="Self.TIPOSDEFACTURAS" Multiplicity="1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOSDEFACTURAS">
+              <PropertyRef Name="Id_tipo" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_USUARIOS">
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="Id_usuario" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIOS_TIPOSDEUSUARIOS">
+          <End Role="TIPOSDEUSUARIOS" Type="Self.TIPOSDEUSUARIOS" Multiplicity="1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOSDEUSUARIOS">
+              <PropertyRef Name="Id_tipoU" />
+            </Principal>
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="Id_tipoU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="INVENTARIODBModeloStoreContainer">
+          <EntitySet Name="ARTICULOS" EntityType="Self.ARTICULOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COTIZACIONES" EntityType="Self.COTIZACIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DETALLEFACTURAS" EntityType="Self.DETALLEFACTURAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTADOSFACTURAS" EntityType="Self.ESTADOSFACTURAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACTURAS" EntityType="Self.FACTURAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPOSDEFACTURAS" EntityType="Self.TIPOSDEFACTURAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPOSDEUSUARIOS" EntityType="Self.TIPOSDEUSUARIOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura_View" EntityType="Self.Factura_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Factura_View].[Articulo] AS [Articulo], 
+[Factura_View].[Nombre] AS [Nombre], 
+[Factura_View].[Monto] AS [Monto], 
+[Factura_View].[Cantidad] AS [Cantidad]
+FROM [dbo].[Factura_View] AS [Factura_View]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Cotizaciones_ARTICULOS" Association="Self.FK_Cotizaciones_ARTICULOS">
+            <End Role="ARTICULOS" EntitySet="ARTICULOS" />
+            <End Role="COTIZACIONES" EntitySet="COTIZACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cotizaciones_CLIENTES" Association="Self.FK_Cotizaciones_CLIENTES">
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+            <End Role="COTIZACIONES" EntitySet="COTIZACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLEFACTURAS_ARTICULOS1" Association="Self.FK_DETALLEFACTURAS_ARTICULOS1">
+            <End Role="ARTICULOS" EntitySet="ARTICULOS" />
+            <End Role="DETALLEFACTURAS" EntitySet="DETALLEFACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLEFACTURAS_CLIENTES1" Association="Self.FK_DETALLEFACTURAS_CLIENTES1">
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+            <End Role="DETALLEFACTURAS" EntitySet="DETALLEFACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_DETALLEFACTURAS" Association="Self.FK_FACTURAS_DETALLEFACTURAS">
+            <End Role="DETALLEFACTURAS" EntitySet="DETALLEFACTURAS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_ESTADOSFACTURAS" Association="Self.FK_FACTURAS_ESTADOSFACTURAS">
+            <End Role="ESTADOSFACTURAS" EntitySet="ESTADOSFACTURAS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_TIPOSDEFACTURAS1" Association="Self.FK_FACTURAS_TIPOSDEFACTURAS1">
+            <End Role="TIPOSDEFACTURAS" EntitySet="TIPOSDEFACTURAS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_USUARIOS" Association="Self.FK_FACTURAS_USUARIOS">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIOS_TIPOSDEUSUARIOS" Association="Self.FK_USUARIOS_TIPOSDEUSUARIOS">
+            <End Role="TIPOSDEUSUARIOS" EntitySet="TIPOSDEUSUARIOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="INVENTARIODBModelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ARTICULOS">
+          <Key>
+            <PropertyRef Name="id_articulo" />
+          </Key>
+          <Property Name="id_articulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Articulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cantidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Precio" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="COTIZACIONES" Relationship="Self.FK_Cotizaciones_ARTICULOS" FromRole="ARTICULOS" ToRole="COTIZACIONES" />
+          <NavigationProperty Name="DETALLEFACTURAS" Relationship="Self.FK_DETALLEFACTURAS_ARTICULOS1" FromRole="ARTICULOS" ToRole="DETALLEFACTURAS" />
+        </EntityType>
+        <EntityType Name="CLIENTES">
+          <Key>
+            <PropertyRef Name="Id_cliente" />
+          </Key>
+          <Property Name="Id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="COTIZACIONES" Relationship="Self.FK_Cotizaciones_CLIENTES" FromRole="CLIENTES" ToRole="COTIZACIONES" />
+          <NavigationProperty Name="DETALLEFACTURAS" Relationship="Self.FK_DETALLEFACTURAS_CLIENTES1" FromRole="CLIENTES" ToRole="DETALLEFACTURAS" />
+        </EntityType>
+        <EntityType Name="COTIZACIONES">
+          <Key>
+            <PropertyRef Name="id_Cotizacion" />
+          </Key>
+          <Property Name="id_Cotizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_articulos" Type="Int32" Nullable="false" />
+          <Property Name="Monto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Id_cliente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ARTICULOS" Relationship="Self.FK_Cotizaciones_ARTICULOS" FromRole="COTIZACIONES" ToRole="ARTICULOS" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.FK_Cotizaciones_CLIENTES" FromRole="COTIZACIONES" ToRole="CLIENTES" />
+        </EntityType>
+        <EntityType Name="DETALLEFACTURAS">
+          <Key>
+            <PropertyRef Name="id_detalle" />
+          </Key>
+          <Property Name="id_detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_articulos" Type="Int32" Nullable="false" />
+          <Property Name="Monto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Id_cliente" Type="Int32" Nullable="false" />
+          <Property Name="Descuento" Type="Int32" />
+          <NavigationProperty Name="ARTICULOS" Relationship="Self.FK_DETALLEFACTURAS_ARTICULOS1" FromRole="DETALLEFACTURAS" ToRole="ARTICULOS" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.FK_DETALLEFACTURAS_CLIENTES1" FromRole="DETALLEFACTURAS" ToRole="CLIENTES" />
+          <NavigationProperty Name="FACTURAS" Relationship="Self.FK_FACTURAS_DETALLEFACTURAS" FromRole="DETALLEFACTURAS" ToRole="FACTURAS" />
+        </EntityType>
+        <EntityType Name="ESTADOSFACTURAS">
+          <Key>
+            <PropertyRef Name="Id_estadoF" />
+          </Key>
+          <Property Name="Id_estadoF" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FACTURAS" Relationship="Self.FK_FACTURAS_ESTADOSFACTURAS" FromRole="ESTADOSFACTURAS" ToRole="FACTURAS" />
+        </EntityType>
+        <EntityType Name="FACTURAS">
+          <Key>
+            <PropertyRef Name="Id_factura" />
+          </Key>
+          <Property Name="Id_factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_detalle" Type="Int32" Nullable="false" />
+          <Property Name="Id_estado" Type="Int32" Nullable="false" />
+          <Property Name="Id_tipo" Type="Int32" Nullable="false" />
+          <Property Name="Id_usuario" Type="Int32" />
+          <NavigationProperty Name="DETALLEFACTURAS" Relationship="Self.FK_FACTURAS_DETALLEFACTURAS" FromRole="FACTURAS" ToRole="DETALLEFACTURAS" />
+          <NavigationProperty Name="ESTADOSFACTURAS" Relationship="Self.FK_FACTURAS_ESTADOSFACTURAS" FromRole="FACTURAS" ToRole="ESTADOSFACTURAS" />
+          <NavigationProperty Name="TIPOSDEFACTURAS" Relationship="Self.FK_FACTURAS_TIPOSDEFACTURAS1" FromRole="FACTURAS" ToRole="TIPOSDEFACTURAS" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.FK_FACTURAS_USUARIOS" FromRole="FACTURAS" ToRole="USUARIOS" />
+        </EntityType>
+        <EntityType Name="TIPOSDEFACTURAS">
+          <Key>
+            <PropertyRef Name="Id_tipo" />
+          </Key>
+          <Property Name="Id_tipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FACTURAS" Relationship="Self.FK_FACTURAS_TIPOSDEFACTURAS1" FromRole="TIPOSDEFACTURAS" ToRole="FACTURAS" />
+        </EntityType>
+        <EntityType Name="TIPOSDEUSUARIOS">
+          <Key>
+            <PropertyRef Name="Id_tipoU" />
+          </Key>
+          <Property Name="Id_tipoU" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.FK_USUARIOS_TIPOSDEUSUARIOS" FromRole="TIPOSDEUSUARIOS" ToRole="USUARIOS" />
+        </EntityType>
+        <EntityType Name="USUARIOS">
+          <Key>
+            <PropertyRef Name="Id_usuario" />
+          </Key>
+          <Property Name="Id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_tipoU" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FACTURAS" Relationship="Self.FK_FACTURAS_USUARIOS" FromRole="USUARIOS" ToRole="FACTURAS" />
+          <NavigationProperty Name="TIPOSDEUSUARIOS" Relationship="Self.FK_USUARIOS_TIPOSDEUSUARIOS" FromRole="USUARIOS" ToRole="TIPOSDEUSUARIOS" />
+        </EntityType>
+        <EntityType Name="Factura_View">
+          <Key>
+            <PropertyRef Name="Articulo" />
+            <PropertyRef Name="Nombre" />
+            <PropertyRef Name="Monto" />
+            <PropertyRef Name="Cantidad" />
+          </Key>
+          <Property Name="Articulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Monto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cotizaciones_ARTICULOS">
+          <End Role="ARTICULOS" Type="Self.ARTICULOS" Multiplicity="1" />
+          <End Role="COTIZACIONES" Type="Self.COTIZACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARTICULOS">
+              <PropertyRef Name="id_articulo" />
+            </Principal>
+            <Dependent Role="COTIZACIONES">
+              <PropertyRef Name="Id_articulos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLEFACTURAS_ARTICULOS1">
+          <End Role="ARTICULOS" Type="Self.ARTICULOS" Multiplicity="1" />
+          <End Role="DETALLEFACTURAS" Type="Self.DETALLEFACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARTICULOS">
+              <PropertyRef Name="id_articulo" />
+            </Principal>
+            <Dependent Role="DETALLEFACTURAS">
+              <PropertyRef Name="Id_articulos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cotizaciones_CLIENTES">
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="1" />
+          <End Role="COTIZACIONES" Type="Self.COTIZACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTES">
+              <PropertyRef Name="Id_cliente" />
+            </Principal>
+            <Dependent Role="COTIZACIONES">
+              <PropertyRef Name="Id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLEFACTURAS_CLIENTES1">
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="1" />
+          <End Role="DETALLEFACTURAS" Type="Self.DETALLEFACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTES">
+              <PropertyRef Name="Id_cliente" />
+            </Principal>
+            <Dependent Role="DETALLEFACTURAS">
+              <PropertyRef Name="Id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_DETALLEFACTURAS">
+          <End Role="DETALLEFACTURAS" Type="Self.DETALLEFACTURAS" Multiplicity="1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DETALLEFACTURAS">
+              <PropertyRef Name="id_detalle" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_ESTADOSFACTURAS">
+          <End Role="ESTADOSFACTURAS" Type="Self.ESTADOSFACTURAS" Multiplicity="1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADOSFACTURAS">
+              <PropertyRef Name="Id_estadoF" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_TIPOSDEFACTURAS1">
+          <End Role="TIPOSDEFACTURAS" Type="Self.TIPOSDEFACTURAS" Multiplicity="1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOSDEFACTURAS">
+              <PropertyRef Name="Id_tipo" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURAS_USUARIOS">
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="FACTURAS" Type="Self.FACTURAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="Id_usuario" />
+            </Principal>
+            <Dependent Role="FACTURAS">
+              <PropertyRef Name="Id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIOS_TIPOSDEUSUARIOS">
+          <End Role="TIPOSDEUSUARIOS" Type="Self.TIPOSDEUSUARIOS" Multiplicity="1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOSDEUSUARIOS">
+              <PropertyRef Name="Id_tipoU" />
+            </Principal>
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="Id_tipoU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="INVENTARIODBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ARTICULOS" EntityType="Self.ARTICULOS" />
+          <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" />
+          <EntitySet Name="COTIZACIONES" EntityType="Self.COTIZACIONES" />
+          <EntitySet Name="DETALLEFACTURAS" EntityType="Self.DETALLEFACTURAS" />
+          <EntitySet Name="ESTADOSFACTURAS" EntityType="Self.ESTADOSFACTURAS" />
+          <EntitySet Name="FACTURAS" EntityType="Self.FACTURAS" />
+          <EntitySet Name="TIPOSDEFACTURAS" EntityType="Self.TIPOSDEFACTURAS" />
+          <EntitySet Name="TIPOSDEUSUARIOS" EntityType="Self.TIPOSDEUSUARIOS" />
+          <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" />
+          <EntitySet Name="Factura_View" EntityType="Self.Factura_View" />
+          <AssociationSet Name="FK_Cotizaciones_ARTICULOS" Association="Self.FK_Cotizaciones_ARTICULOS">
+            <End Role="ARTICULOS" EntitySet="ARTICULOS" />
+            <End Role="COTIZACIONES" EntitySet="COTIZACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLEFACTURAS_ARTICULOS1" Association="Self.FK_DETALLEFACTURAS_ARTICULOS1">
+            <End Role="ARTICULOS" EntitySet="ARTICULOS" />
+            <End Role="DETALLEFACTURAS" EntitySet="DETALLEFACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cotizaciones_CLIENTES" Association="Self.FK_Cotizaciones_CLIENTES">
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+            <End Role="COTIZACIONES" EntitySet="COTIZACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLEFACTURAS_CLIENTES1" Association="Self.FK_DETALLEFACTURAS_CLIENTES1">
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+            <End Role="DETALLEFACTURAS" EntitySet="DETALLEFACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_DETALLEFACTURAS" Association="Self.FK_FACTURAS_DETALLEFACTURAS">
+            <End Role="DETALLEFACTURAS" EntitySet="DETALLEFACTURAS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_ESTADOSFACTURAS" Association="Self.FK_FACTURAS_ESTADOSFACTURAS">
+            <End Role="ESTADOSFACTURAS" EntitySet="ESTADOSFACTURAS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_TIPOSDEFACTURAS1" Association="Self.FK_FACTURAS_TIPOSDEFACTURAS1">
+            <End Role="TIPOSDEFACTURAS" EntitySet="TIPOSDEFACTURAS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURAS_USUARIOS" Association="Self.FK_FACTURAS_USUARIOS">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="FACTURAS" EntitySet="FACTURAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIOS_TIPOSDEUSUARIOS" Association="Self.FK_USUARIOS_TIPOSDEUSUARIOS">
+            <End Role="TIPOSDEUSUARIOS" EntitySet="TIPOSDEUSUARIOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="INVENTARIODBModeloStoreContainer" CdmEntityContainer="INVENTARIODBEntities">
+          <EntitySetMapping Name="ARTICULOS">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.ARTICULOS">
+              <MappingFragment StoreEntitySet="ARTICULOS">
+                <ScalarProperty Name="id_articulo" ColumnName="id_articulo" />
+                <ScalarProperty Name="Articulo" ColumnName="Articulo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTES">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.CLIENTES">
+              <MappingFragment StoreEntitySet="CLIENTES">
+                <ScalarProperty Name="Id_cliente" ColumnName="Id_cliente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COTIZACIONES">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.COTIZACIONES">
+              <MappingFragment StoreEntitySet="COTIZACIONES">
+                <ScalarProperty Name="id_Cotizacion" ColumnName="id_Cotizacion" />
+                <ScalarProperty Name="Id_articulos" ColumnName="Id_articulos" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Id_cliente" ColumnName="Id_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLEFACTURAS">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.DETALLEFACTURAS">
+              <MappingFragment StoreEntitySet="DETALLEFACTURAS">
+                <ScalarProperty Name="id_detalle" ColumnName="id_detalle" />
+                <ScalarProperty Name="Id_articulos" ColumnName="Id_articulos" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Id_cliente" ColumnName="Id_cliente" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADOSFACTURAS">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.ESTADOSFACTURAS">
+              <MappingFragment StoreEntitySet="ESTADOSFACTURAS">
+                <ScalarProperty Name="Id_estadoF" ColumnName="Id_estadoF" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACTURAS">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.FACTURAS">
+              <MappingFragment StoreEntitySet="FACTURAS">
+                <ScalarProperty Name="Id_factura" ColumnName="Id_factura" />
+                <ScalarProperty Name="id_detalle" ColumnName="id_detalle" />
+                <ScalarProperty Name="Id_estado" ColumnName="Id_estado" />
+                <ScalarProperty Name="Id_tipo" ColumnName="Id_tipo" />
+                <ScalarProperty Name="Id_usuario" ColumnName="Id_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPOSDEFACTURAS">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.TIPOSDEFACTURAS">
+              <MappingFragment StoreEntitySet="TIPOSDEFACTURAS">
+                <ScalarProperty Name="Id_tipo" ColumnName="Id_tipo" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPOSDEUSUARIOS">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.TIPOSDEUSUARIOS">
+              <MappingFragment StoreEntitySet="TIPOSDEUSUARIOS">
+                <ScalarProperty Name="Id_tipoU" ColumnName="Id_tipoU" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIOS">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.USUARIOS">
+              <MappingFragment StoreEntitySet="USUARIOS">
+                <ScalarProperty Name="Id_usuario" ColumnName="Id_usuario" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="Id_tipoU" ColumnName="Id_tipoU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura_View">
+            <EntityTypeMapping TypeName="INVENTARIODBModelo.Factura_View">
+              <MappingFragment StoreEntitySet="Factura_View">
+                <ScalarProperty Name="Articulo" ColumnName="Articulo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
