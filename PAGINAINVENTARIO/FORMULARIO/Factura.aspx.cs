@@ -16,35 +16,43 @@ namespace PAGINAINVENTARIO.FORMULARIO
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+            articulo = Convert.ToInt32(ddArticulo.SelectedIndex);
+            monto = Convert.ToInt32(txtMonto.Text);
+            cantidad = Convert.ToInt32(txtCantidad.Text);
+            cliente = Convert.ToInt32(ddCliente.SelectedIndex);
+            descuento = Convert.ToInt32(txtDescuento.Text);
+
             DataTable dt = new DataTable();
+            
+            DataRow dr = dt.NewRow();
 
+            
 
-            if (dt.Columns.Count==0)
+            if (dt.Rows.Count==0)
             {
-                articulo = Convert.ToInt32(ddArticulo.SelectedIndex);
-                monto = Convert.ToInt32(txtMonto.Text);
-                cantidad = Convert.ToInt32(txtCantidad.Text);
-                cliente = Convert.ToInt32(ddCliente.SelectedIndex);
-                descuento = Convert.ToInt32(txtDescuento.Text);
+                dt.Columns.Add(new DataColumn("IdArticulo", typeof(string)));
+                dt.Columns.Add(new DataColumn("IdMonto", typeof(string)));
+                dt.Columns.Add(new DataColumn("IdCantidad", typeof(string)));
+                dt.Columns.Add(new DataColumn("IdCliente", typeof(string)));
+                dt.Columns.Add(new DataColumn("IdDescuento", typeof(string)));
 
-                dt.Columns.Add("Articulo", typeof(string));
-                dt.Columns.Add("Monto", typeof(string));
-                dt.Columns.Add("Cantidad", typeof(string));
-                dt.Columns.Add("Cliente", typeof(string));
-                dt.Columns.Add("Descuento", typeof(string));
-
-                DataRow dr = dt.NewRow();
-                dr[0] = ddArticulo.SelectedIndex;
-                dr[1] = txtMonto.Text;
-                dr[2] = txtCantidad.Text;
-                dr[3] = ddCliente.SelectedIndex;
-                dr[4] = txtDescuento.Text;
+                dr["IdArticulo"] = articulo;
+                dr["IdMonto"] = monto;
+                dr["IdCantidad"] = cantidad;
+                dr["IdCliente"] = cliente;
+                dr["IdDescuento"] = descuento;
 
                 dt.Rows.Add(dr);
 
                 GridView1.DataSource = dt;
-                GridView1.DataBind();
+                
             }
+            else
+            {
+                Response.Write("<script>alert('ERROR')</script>");
+            }
+
+            GridView1.DataBind();
         }
 
         protected void Page_Load(object sender, EventArgs e)
