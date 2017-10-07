@@ -45,14 +45,15 @@ namespace PAGINAINVENTARIO.FORMULARIO
                 dt.Rows.Add(dr);
 
                 GridView1.DataSource = dt;
-                
+                GridView1.DataBind();
             }
+            
             else
             {
                 Response.Write("<script>alert('ERROR')</script>");
             }
 
-            GridView1.DataBind();
+            //GridView1.DataBind();
         }
 
         protected void Page_Load(object sender, EventArgs e)
