@@ -35,6 +35,7 @@ namespace PAGINAINVENTARIO.FORMULARIO
         {
             crearTabla();
             llenarTabla();
+            //añadir();
             bindGrid();
         }
 
@@ -49,12 +50,62 @@ namespace PAGINAINVENTARIO.FORMULARIO
             dr["IdDescuento"] = txtDescuento.Text;
 
             dt.Rows.Add(dr);
+
+            ViewState["tabla"] = dt;
         }
 
+        private void añadir()
+        {
+            int conteo = 0;
+
+            
+
+            if (ViewState["tabla"] !=null)
+            {
+                DataTable dtActual = (DataTable)ViewState["tabla"];
+                DataRow drActual = null;
+
+                if (dtActual.Rows.Count>0)
+                {
+                    for (int i = 1; i < dtActual.Rows.Count; i++)
+                    {
+                        DropDownList dropA = (DropDownList)gvFactura.Rows[conteo].Cells[0].FindControl("IdArticulo");
+                        TextBox boxM = (TextBox)gvFactura.Rows[conteo].Cells[1].FindControl("IdMonto");
+                        TextBox boxC = (TextBox)gvFactura.Rows[conteo].Cells[2].FindControl("IdCantidad");
+                        DropDownList dropC = (DropDownList)gvFactura.Rows[conteo].Cells[3].FindControl("IdCliente");
+                        TextBox boxD = (TextBox)gvFactura.Rows[conteo].Cells[4].FindControl("IdDescuento");
+
+                        drActual = dtActual.NewRow();
+                        drActual["IdArticulo"] = i + 1;
+
+                        dtActual.Rows[i - 1]["IdArticulo"] = dropA.SelectedIndex;
+                        dtActual.Rows[i - 1]["IdMonto"] = boxM.Text;
+                        dtActual.Rows[i - 1]["IdCantidad"] = boxC.Text;
+                        dtActual.Rows[i - 1]["IdCliente"] = dropC.SelectedIndex;
+                        dtActual.Rows[i - 1]["IdDescuento"] = boxD.Text;
+
+                        conteo++;
+                    }
+
+                    dtActual.Rows.Add(drActual);
+                    ViewState["tabla"] = dtActual;
+
+                    gvFactura.DataSource = dtActual;
+                    gvFactura.DataBind();
+                }
+            }
+            else
+            {
+                Response.Write("ViewState is null");
+            }
+
+
+        }
+        
         private void bindGrid()
         {
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+            gvFactura.DataSource = dt;
+            gvFactura.DataBind();
         }
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
