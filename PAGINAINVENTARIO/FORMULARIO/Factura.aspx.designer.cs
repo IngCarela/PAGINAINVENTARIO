@@ -130,13 +130,13 @@ namespace PAGINAINVENTARIO.FORMULARIO {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// Control Button2.
+        /// Control btnAgregar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button btnAgregar;
         
         /// <summary>
         /// Control gvFactura.
@@ -148,12 +148,12 @@ namespace PAGINAINVENTARIO.FORMULARIO {
         protected global::System.Web.UI.WebControls.GridView gvFactura;
         
         /// <summary>
-        /// Control DetalleSource.
+        /// Control FacturaSource.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource DetalleSource;
+        protected global::System.Web.UI.WebControls.SqlDataSource FacturaSource;
     }
 }
