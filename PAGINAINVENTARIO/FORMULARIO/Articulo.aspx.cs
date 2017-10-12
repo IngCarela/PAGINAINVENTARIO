@@ -12,7 +12,7 @@ namespace PAGINAINVENTARIO.FORMULARIO
     public partial class Articulo : System.Web.UI.Page
     {
         INVENTARIODBEntities db = new INVENTARIODBEntities();
-        int precio;
+        int precio, cantidad;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,6 +55,7 @@ namespace PAGINAINVENTARIO.FORMULARIO
         private void convertirAEntero()
         {
             precio = Convert.ToInt32(txtPrecio.Text);
+            cantidad = Convert.ToInt32(txtCantidad.Text);
         }
 
         private void limpiarCajaDeTexto()
@@ -71,6 +72,15 @@ namespace PAGINAINVENTARIO.FORMULARIO
         {
             gvArticulo.DataSource = db.ARTICULOS.ToList();
             gvArticulo.DataBind();
+        }
+        
+        private void actualizar(DETALLEFACTURAS factura)
+        {
+            convertirAEntero();
+            //using(var db =new INVENTARIODBEntities())
+            //{
+            //    db.DETALLEFACTURAS.Where(x=>x.Cantidad==cantidad)
+            //}
         }
     }
 }
