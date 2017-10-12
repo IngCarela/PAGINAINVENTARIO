@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using PAGINAINVENTARIO.MODELO;
+using System.Data.SqlClient;
 
 namespace PAGINAINVENTARIO.FORMULARIO
 {
@@ -22,6 +23,8 @@ namespace PAGINAINVENTARIO.FORMULARIO
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             añadirArticulo();
+            
+            
         }
 
         private void añadirArticulo()
@@ -74,13 +77,5 @@ namespace PAGINAINVENTARIO.FORMULARIO
             gvArticulo.DataBind();
         }
         
-        private void actualizar(DETALLEFACTURAS factura)
-        {
-            convertirAEntero();
-            //using(var db =new INVENTARIODBEntities())
-            //{
-            //    db.DETALLEFACTURAS.Where(x=>x.Cantidad==cantidad)
-            //}
-        }
     }
 }

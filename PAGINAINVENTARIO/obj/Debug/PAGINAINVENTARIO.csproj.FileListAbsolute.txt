@@ -87,3 +87,8 @@ c:\users\ingcarela\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINA
 c:\users\ingcarela\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\obj\Debug\PAGINAINVENTARIO.csproj.CoreCompileInputs.cache
 c:\users\ingcarela\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\obj\Debug\PAGINAINVENTARIO.dll
 c:\users\ingcarela\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\obj\Debug\PAGINAINVENTARIO.pdb
+C:\Users\INGCARELA\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\bin\EntityFramework.Extended.dll
+C:\Users\INGCARELA\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\bin\EntityFramework.SqlServer.dll
+C:\Users\INGCARELA\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\bin\EntityFramework.Extended.xml
+C:\Users\INGCARELA\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\bin\EntityFramework.Extended.dll.config
+C:\Users\INGCARELA\documents\visual studio 2017\Projects\PAGINAINVENTARIO\PAGINAINVENTARIO\bin\EntityFramework.SqlServer.xml

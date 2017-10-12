@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using PAGINAINVENTARIO.MODELO;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace PAGINAINVENTARIO.FORMULARIO
 {
@@ -40,6 +41,7 @@ namespace PAGINAINVENTARIO.FORMULARIO
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             facturar();
+            editar();
             
         }
 
@@ -85,6 +87,43 @@ namespace PAGINAINVENTARIO.FORMULARIO
         }
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+        
+        private void editar()
+        {
+            string conectionString = "Data Source= DESKTOP-8K6I7RO/CARELADBA; Initial Catalog= INVENTARIODB; Integrated Security=true ";
+
+            SqlConnection cnn = new SqlConnection(conectionString);
+
+            cnn.Open();
+
+            try
+            {
+                string sql = "UPDATE ARTICULOS SET Cantidad = Cantida -" + txtCantidad.Text + "WHERE id_articulo = @id_articulo";
+
+                SqlCommand cmd = new SqlCommand(sql);
+
+                int result = cmd.ExecuteNonQuery();
+
+                if (result > 0)
+                {
+                    Response.Write("Actualizacion exitosa!!!!!");
+                }
+                else
+                {
+                    Response.Write("Hubo un error");
+                }
+            }
+            catch (Exception)
+            {
+
+                Response.Write("ERROR");
+            }
+            finally
+            {
+                cnn.Close();
+            }
 
         }
     }
