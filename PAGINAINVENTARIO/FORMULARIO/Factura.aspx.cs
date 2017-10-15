@@ -92,22 +92,19 @@ namespace PAGINAINVENTARIO.FORMULARIO
         
         private void editar()
         {
-            ARTICULOS a = new ARTICULOS();
+            int id = Convert.ToInt32(ddArticulo.SelectedValue);
+            
+            ARTICULOS a = db.ARTICULOS.Single(x => x.id_articulo ==id);
 
-            int c = Convert.ToInt32(txtCantidad.Text);
+            
             int z;
+            
+            z = Convert.ToInt32(txtCantidad.Text);
+            string p = a.Cantidad;
+            int r = Convert.ToInt32(p);
+            int lo = r - z;
 
-            var query = (from x in db.ARTICULOS
-                         where x.id_articulo == a.id_articulo
-                         select x);
-                      
-
-            foreach (var consulta in query)
-            {
-                z = Convert.ToInt32(consulta.Cantidad);
-                z = z - c;
-
-            }
+            a.Cantidad = lo.ToString();
 
             db.SaveChanges();
         }
