@@ -92,21 +92,31 @@ namespace PAGINAINVENTARIO.FORMULARIO
         
         private void editar()
         {
-            int id = Convert.ToInt32(ddArticulo.SelectedValue);
-            
-            ARTICULOS a = db.ARTICULOS.Single(x => x.id_articulo ==id);
+            try
+            {
+                int id = Convert.ToInt32(ddArticulo.SelectedValue);
+
+                ARTICULOS a = db.ARTICULOS.Single(x => x.id_articulo == id);
+
+
+                int z;
+
+                z = Convert.ToInt32(txtCantidad.Text);
+                string p = a.Cantidad;
+                int r = Convert.ToInt32(p);
+                int lo = r - z;
+
+                a.Cantidad = lo.ToString();
+
+                db.SaveChanges();
+            }
+            catch (Exception er)
+            {
+
+                Response.Write("<script>alert('Hubo un error')</script>");
+            }
 
             
-            int z;
-            
-            z = Convert.ToInt32(txtCantidad.Text);
-            string p = a.Cantidad;
-            int r = Convert.ToInt32(p);
-            int lo = r - z;
-
-            a.Cantidad = lo.ToString();
-
-            db.SaveChanges();
         }
     }
 }
