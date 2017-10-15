@@ -23,7 +23,10 @@
         </tr>
         <tr>
             <td class="auto-style1"><asp:Label ID="Label1" runat="server" Text="Monto"></asp:Label></td>
-            <td><asp:TextBox ID="txtMonto" runat="server" CssClass="form-inline"></asp:TextBox></td>
+            <td>
+                <asp:DropDownList ID="ddMonto" runat="server" DataSourceID="ArticuloSource" DataTextField="Precio" DataValueField="id_articulo">
+                </asp:DropDownList>
+            </td>
         </tr>
         <tr>
             <td class="auto-style1"><asp:Label ID="Label2" runat="server" Text="Cantidad"></asp:Label></td>

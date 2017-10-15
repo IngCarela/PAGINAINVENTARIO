@@ -23,6 +23,14 @@ namespace PAGINAINVENTARIO.FORMULARIO
             
         }
         
+        
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {
+            validarCantidadDescuento();
+            focoEnMonto();
+            limpiaCajaDeTexto();
+        }
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             limpiaCajaDeTexto();
@@ -31,20 +39,41 @@ namespace PAGINAINVENTARIO.FORMULARIO
 
         private void limpiaCajaDeTexto()
         {
-            txtMonto.Text = txtDescuento.Text = txtCantidad.Text = "";
+            txtDescuento.Text = txtCantidad.Text = "";
         }
 
         private void focoEnMonto()
         {
-            txtMonto.Focus();
-        }
-        protected void btnGuardar_Click(object sender, EventArgs e)
-        {
-            facturar();
-            editar();
-            
+            txtCantidad.Focus();
         }
 
+       
+
+        
+        private void bindGrid()
+        {
+            gvFactura.DataSource = db.DETALLEFACTURAS.ToList();
+            gvFactura.DataBind();
+        }
+        protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        
+        private void validarCantidadDescuento()
+        {
+            convertirVariables();
+            if (cantidad>monto || descuento>monto)
+            {
+                Response.Write("<script>alert('La cantidad o el descuento son mayores que el monto')</script>");
+            }
+            else
+            {
+                facturar();
+                editar();
+            }
+        }
+        
         private void facturar()
         {
             convertirVariables();
@@ -69,27 +98,9 @@ namespace PAGINAINVENTARIO.FORMULARIO
 
                 Response.Write("<script>alert('Ha ocurrido un error')</script>");
             }
-           
-        }
-
-        private void convertirVariables()
-        {
-            articulo = Convert.ToInt32(ddArticulo.SelectedValue);
-            monto = Convert.ToInt32(txtMonto.Text);
-            cantidad = Convert.ToInt32(txtCantidad.Text);
-            cliente = Convert.ToInt32(ddCliente.SelectedValue);
-            descuento = Convert.ToInt32(txtDescuento.Text);
-        }
-        private void bindGrid()
-        {
-            gvFactura.DataSource = db.DETALLEFACTURAS.ToList();
-            gvFactura.DataBind();
-        }
-        protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
         }
-        
+
         private void editar()
         {
             try
@@ -116,7 +127,16 @@ namespace PAGINAINVENTARIO.FORMULARIO
                 Response.Write("<script>alert('Hubo un error')</script>");
             }
 
-            
+        }
+
+
+        private void convertirVariables()
+        {
+            articulo = Convert.ToInt32(ddArticulo.SelectedValue);
+            monto = Convert.ToInt32(ddMonto.SelectedValue);
+            cantidad = Convert.ToInt32(txtCantidad.Text);
+            cliente = Convert.ToInt32(ddCliente.SelectedValue);
+            descuento = Convert.ToInt32(txtDescuento.Text);
         }
     }
 }
