@@ -92,39 +92,24 @@ namespace PAGINAINVENTARIO.FORMULARIO
         
         private void editar()
         {
-            string conectionString = "Data Source= DESKTOP-8K6I7RO/CARELADBA; Initial Catalog= INVENTARIODB; Integrated Security=true ";
+            ARTICULOS a = new ARTICULOS();
 
-            SqlConnection cnn = new SqlConnection(conectionString);
+            int c = Convert.ToInt32(txtCantidad.Text);
+            int z;
 
-            cnn.Open();
+            var query = (from x in db.ARTICULOS
+                         where x.id_articulo == a.id_articulo
+                         select x);
+                      
 
-            try
+            foreach (var consulta in query)
             {
-                string sql = "UPDATE ARTICULOS SET Cantidad = Cantida -" + txtCantidad.Text + "WHERE id_articulo = @id_articulo";
+                z = Convert.ToInt32(consulta.Cantidad);
+                z = z - c;
 
-                SqlCommand cmd = new SqlCommand(sql);
-
-                int result = cmd.ExecuteNonQuery();
-
-                if (result > 0)
-                {
-                    Response.Write("Actualizacion exitosa!!!!!");
-                }
-                else
-                {
-                    Response.Write("Hubo un error");
-                }
-            }
-            catch (Exception)
-            {
-
-                Response.Write("ERROR");
-            }
-            finally
-            {
-                cnn.Close();
             }
 
+            db.SaveChanges();
         }
     }
 }
