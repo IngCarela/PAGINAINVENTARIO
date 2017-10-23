@@ -26,7 +26,9 @@ namespace PAGINAINVENTARIO.FORMULARIO
         
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            validarCantidadDescuento();
+
+
+            validarCantidadCero();
             focoEnMonto();
             limpiaCajaDeTexto();
         }
@@ -67,11 +69,8 @@ namespace PAGINAINVENTARIO.FORMULARIO
             {
                 Response.Write("<script>alert('La cantidad o el descuento son mayores que el monto')</script>");
             }
-            else
-            {
-                facturar();
-                editar();
-            }
+            
+           
         }
         
         private void facturar()
@@ -128,7 +127,28 @@ namespace PAGINAINVENTARIO.FORMULARIO
             }
 
         }
+        
+        private void validarCantidadCero()
+        {
 
+            int id = Convert.ToInt32(ddArticulo.SelectedValue);
+            int cero;
+
+            var query = db.ARTICULOS.Where(x => x.id_articulo == id).FirstOrDefault();
+
+            cero = Convert.ToInt32(query.Cantidad);
+
+            if (cero<=0)
+            {
+                Response.Write("<script>alert('La cantidad de productos a llegado a cero')</script>");
+            }
+            else
+            {
+                validarCantidadDescuento();
+                facturar();
+                editar();
+            }
+        }
 
         private void convertirVariables()
         {
